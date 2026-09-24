@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:" />
+  <title>Release Note Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="editor">
+      <div class="toolbar">
+        <button data-action="new" title="New release (⌘N)">New</button>
+        <button data-action="open" title="Open release (⌘O)">Open</button>
+        <button data-action="save" title="Save release (⌘S)">Save</button>
+        <span class="spacer"></span>
+        <button data-action="export" class="primary" title="Export PDF (⌘E)">Export PDF</button>
+      </div>
+
+      <div class="editor-scroll">
+        <section class="panel">
+          <h2>Release Details</h2>
+          <div class="grid">
+            <label>Product<input data-field="product" placeholder="Accounting" /></label>
+            <label>Version<input data-field="version" placeholder="2.0.6" /></label>
+            <label>Document Title<input data-field="title" placeholder="Release Notes" /></label>
+            <label>Release Date<input data-field="date" type="date" /></label>
+            <label>Release Type<input data-field="releaseType" list="release-types" /></label>
+            <label>Environment<input data-field="environment" list="environments" /></label>
+            <label class="full">Footer Note<input data-field="footerNote" placeholder="Internal Release Document" /></label>
+            <div class="full logo-row">
+              <span class="label">Logo</span>
+              <div class="logo-controls">
+                <div id="logo-thumb" class="logo-thumb">None</div>
+                <button id="logo-choose">Choose…</button>
+                <button id="logo-remove">Remove</button>
+                <label class="check"><input id="logo-tile" type="checkbox" /> White background</label>
+              </div>
+            </div>
+            <div class="full theme-row">
+              <span class="label">Theme Color</span>
+              <div class="swatches">
+                <span id="swatches"></span>
+                <input id="theme-color" data-field="themeColor" type="color" title="Custom color" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div id="sections"></div>
+      </div>
+    </aside>
+
+    <main class="preview">
+      <div id="preview-host"></div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <datalist id="release-types">
+    <option value="Major Release"></option>
+    <option value="Minor Release"></option>
+    <option value="Maintenance Release"></option>
+    <option value="Hotfix"></option>
+  </datalist>
+  <datalist id="environments">
+    <option value="Production"></option>
+    <option value="Staging"></option>
+    <option value="UAT"></option>
+    <option value="Development"></option>
+  </datalist>
+
+  <script src="template.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

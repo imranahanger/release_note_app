@@ -1,0 +1,60 @@
+{
+  "product": "Accounting",
+  "title": "Release Notes",
+  "version": "2.0.6",
+  "date": "2026-09-23",
+  "releaseType": "Maintenance Release",
+  "environment": "Production",
+  "footerNote": "Internal Release Document",
+  "themeColor": "#1e2a4a",
+  "sections": {
+    "features": [
+      {
+        "title": "Tooltips on the Collapsed Sidebar",
+        "tickets": "TIM-1070",
+        "description": "With the sidebar collapsed only the icons are visible, and several of them are hard to tell apart at a glance. Hovering a collapsed sidebar item now shows its name in a tooltip, placed on whichever side the layout direction calls for so it reads correctly in Arabic as well as English. Nothing changes while the sidebar is expanded, where the labels are already on screen."
+      }
+    ],
+    "improvements": [
+      {
+        "title": "Full Notification Content Readable from the Notifications List",
+        "tickets": "TIM-1067",
+        "description": "The message column stretched the table rows to fit whatever had been sent, so a long notification pushed everything else out of alignment, and there was no way to read one in full. The column is now clipped to two lines and a **View** action opens the notification in a dialog showing the recipient, the date sent, the subject and the complete message. The same view is available from the mobile notification cards, on both the admin and partner notification screens. Admins without delete rights previously saw an “N/A” placeholder in the actions column; they now simply get the view action."
+      },
+      {
+        "title": "Chat List Grouping, Sorting and Search Corrected",
+        "tickets": "TIM-1072",
+        "description": "Clients who had never exchanged a message sat among the active conversations and pushed recent chats down the list, because a chat with no last message could not be ordered and left the whole list unsorted. Conversations with history are now ordered by their most recent message, and chats that have never been messaged are collected into a separate collapsible group below them. Search also matched against the chat that happened to be open rather than the chat being tested, so it returned the entire list or nothing at all; it now matches each conversation’s own participants. The sidebar shows its loading skeleton until the conversations have actually arrived, instead of briefly claiming there are no chats."
+      }
+    ],
+    "security": [
+      {
+        "title": "Link Previews Can No Longer Reach Internal Services",
+        "tickets": "TIM-1072",
+        "description": "When a link is pasted into a chat, the server fetches the page to build the preview card. That fetch took whatever URL it was given, so anyone who could send a message could make the messaging service request an address on the internal network or the cloud metadata endpoint and read part of the response back out of the preview. The URL is now validated before the request is made — only http and https, only the standard web ports, no embedded credentials — and the address it resolves to is checked against private, loopback, link-local and other reserved ranges, on each redirect as well as the first request. The connection is pinned to the address that was checked, redirects are capped, and the download is limited in both size and time."
+      },
+      {
+        "title": "Chat Push Notifications Restricted to the Assigned Accountant",
+        "tickets": "TIM-1072",
+        "description": "The endpoint that sends a customer the “New message from Accountant” push accepted any chat id from any signed-in accountant and forwarded the supplied text verbatim, so an accountant not assigned to a company could still send a notification to that company’s owner. The request is now refused unless the caller is one of the customer’s assigned accountants, an unknown chat id returns not found instead of failing part-way through, and the notification body is capped in length."
+      }
+    ],
+    "fixes": [
+      {
+        "title": "Microphone Blocked in AI Chat",
+        "tickets": "TIM-1074",
+        "description": "Voice input in the AI chat failed before the browser ever asked for permission. The application was served with a policy header that denied microphone and camera access to the page outright, so the request was refused by the browser regardless of what the user had allowed. Both are now permitted for our own pages, and the normal browser permission prompt appears as expected. They remain denied to any embedded third-party content."
+      },
+      {
+        "title": "Dropdowns, Dialogs and Date Pickers Flashed on Opening",
+        "tickets": "TIM-1071",
+        "description": "Overlay components showed a single-frame flash as they opened: the animation ran off the main thread and, as it was handed back, the element was briefly painted in its un-animated state. Modals, dropdowns, selects, autocompletes, date and currency pickers, popovers and tooltips now animate on the main thread and open cleanly. The change is applied centrally in the shared components, so it carries across every screen that uses them."
+      },
+      {
+        "title": "Chat Opened Duplicate Realtime Connections and Left Them Open",
+        "tickets": "TIM-1072",
+        "description": "Two parts of the messaging screen each created their own realtime chat connection, and neither closed it when the screen was left, so connections and their event listeners accumulated over a session — showing up as messages arriving more than once, duplicate typing and read indicators, and the chat growing slower the longer it stayed open. Messaging now uses a single shared connection, subscribes to each event exactly once, and tears the subscription down when the screen closes. Switching between conversations no longer re-subscribes, and a connection that is in the middle of starting when the user navigates away is stopped rather than left running."
+      }
+    ]
+  }
+}

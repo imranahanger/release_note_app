@@ -1,0 +1,270 @@
+/* Styles for the release notes document itself (used by both the preview and the PDF) */
+
+@page {
+  size: A4;
+  margin: 14mm 0 16mm 0;
+}
+
+@page :first {
+  margin-top: 0;
+}
+
+/* Theme defaults; the chosen theme overrides these (on the preview host, or on .report in the PDF) */
+:root,
+:host {
+  --brand: #1e2a4a;
+  --on-brand: #ffffff;
+}
+
+.report {
+  --ink: #1e293b;
+  --text: #475569;
+  --muted: #64748b;
+  --faint: #94a3b8;
+  --line: #e2e8f0;
+  font-family: -apple-system, "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Header banner */
+.banner {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 48px 32px;
+  background: linear-gradient(135deg, var(--brand) 0%, color-mix(in srgb, var(--brand) 82%, #fff) 100%);
+  color: var(--on-brand);
+}
+.banner::after {
+  content: '';
+  position: absolute;
+  top: -70px;
+  right: -50px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--on-brand) 6%, transparent);
+}
+.banner-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.logo img {
+  display: block;
+  max-width: 160px;
+  max-height: 64px;
+  object-fit: contain;
+}
+.logo.tiled {
+  padding: 10px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.logo.tiled img {
+  max-height: 48px;
+}
+.eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--on-brand) 60%, transparent);
+}
+.banner h1 {
+  margin: 10px 0 0;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.version {
+  padding: 6px 14px;
+  border: 1px solid color-mix(in srgb, var(--on-brand) 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--on-brand) 12%, transparent);
+  font-size: 11px;
+  font-weight: 600;
+}
+.meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 40px;
+  margin: 28px 0 0;
+}
+.meta dt {
+  margin-bottom: 5px;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--on-brand) 55%, transparent);
+}
+.meta dd {
+  margin: 0;
+  font-size: 12px;
+}
+
+/* Summary strip */
+.stats {
+  display: flex;
+  gap: 40px;
+  padding: 18px 48px;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--brand) 8%, #fff);
+}
+.stat-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--brand) 75%, #0f172a);
+}
+.stat-label {
+  margin-top: 4px;
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Sections */
+.body {
+  padding: 28px 48px 16px;
+}
+.empty {
+  color: var(--faint);
+  font-size: 12px;
+  text-align: center;
+  padding: 40px 0;
+}
+.section {
+  margin-bottom: 26px;
+}
+.section-features { --accent: #3b82f6; --tint: #e8f0fe; --accent-ink: #1d4ed8; }
+.section-improvements { --accent: #22c55e; --tint: #e3f6ea; --accent-ink: #15803d; }
+.section-security { --accent: #f97316; --tint: #ffefe3; --accent-ink: #c2410c; }
+.section-fixes { --accent: #a855f7; --tint: #f3e8ff; --accent-ink: #7e22ce; }
+
+.keep {
+  break-inside: avoid;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--line);
+}
+.section-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--tint);
+  font-size: 13px;
+}
+.section-head h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+.section-tickets {
+  font-size: 9.5px;
+  color: var(--faint);
+}
+
+/* Items */
+.item {
+  margin-bottom: 10px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fafc;
+  break-inside: avoid;
+}
+.item-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.item h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+.ticket {
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--tint);
+  color: var(--accent-ink);
+  font-size: 8.5px;
+  font-weight: 600;
+}
+.item-body {
+  padding-left: 14px;
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.item-body p {
+  margin: 0 0 6px;
+}
+.item-body p:last-child {
+  margin-bottom: 0;
+}
+.item-body strong {
+  color: var(--ink);
+}
+.item-body code {
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: #eef2f7;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+
+/* Footer (the PDF prints its own per-page footer instead) */
+.report-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 48px 22px;
+  border-top: 1px solid var(--line);
+  background: #f8fafc;
+  font-size: 9px;
+  color: var(--faint);
+}
+@media print {
+  .report-footer {
+    display: none;
+  }
+}
